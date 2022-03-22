@@ -1,23 +1,20 @@
 package com.co.gocho.util;
 
 
+import org.junit.Assert;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
 public class StringUtilTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void testRepeat() {
 
-        assertEquals( StringUtil.repeat("hola",3),"holaholahola");
+        Assert.assertEquals("holaholahola",StringUtil.repeat("hola",3));
 
         String result2 = StringUtil.repeat("hola",2);
-        assertEquals(result2,"holahola");
-
-
-
+        Assert.assertEquals("holahola",result2);
     }
 
-    private static void assertEquals(String actual, String expected) {
-
-        if (!actual.equals(expected)) {
-            throw new RuntimeException(actual+" in not equal to expected :"+ expected);
-        }
-    }
 }
