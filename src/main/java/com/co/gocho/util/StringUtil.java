@@ -7,13 +7,18 @@ public class StringUtil {
         if (times < 0){
             throw new IllegalArgumentException("Negative times not all");
         }
-
         String result = "";
-
         for (int t = 0; t < times; t++) {
             result += str;
         }
         return result;
     }
+
+
+    public static boolean isEmpty(String str){
+        return str == null || str.trim().length() <= 0;
+    }
+
+
 
 }
