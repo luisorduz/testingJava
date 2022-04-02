@@ -14,7 +14,7 @@ public class PriceCalculator {
             result += price;
         }
 
-        return  result * ((100d - discount )/100);
+        return  result * ((100 - discount )/100);
     }
 
     public void addPrice(double price) {
