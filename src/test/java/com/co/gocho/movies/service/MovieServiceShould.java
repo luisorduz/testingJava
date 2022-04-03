@@ -57,7 +57,7 @@ public class MovieServiceShould {
         assertThat(getMovieIds(movies),CoreMatchers.is(Arrays.asList(3,6)));
     }
 
-    
+
 
     @Test
     public void return_movies_by_length(){
