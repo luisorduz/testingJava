@@ -5,6 +5,7 @@ import com.co.gocho.movies.model.Genre;
 import com.co.gocho.movies.model.Movie;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -29,6 +30,8 @@ public class MovieServiceShould {
     //MovieRepository movieRepository;
 
     private MovieRepository movieRepository;
+    private MovieService movieService;
+
 
     @Before
     public void setUp() {
@@ -43,15 +46,32 @@ public class MovieServiceShould {
                 new Movie(6, "Home Alone", 103, COMEDY),
                 new Movie(7, "Matrix", 136, ACTION)
         ));
+
+        movieService = new MovieService(movieRepository);
     }
 
     @Test
     public void return_movies_by_genre(){
-        MovieService movieService = new MovieService(movieRepository);
 
         Collection<Movie> movies = movieService.findMoviesByGenre(COMEDY);
-        List<Integer> movieIds = movies.stream().map(Movie::getId).collect(Collectors.toList());
-        assertThat(movieIds,CoreMatchers.is(Arrays.asList(3,6)));
+        assertThat(getMovieIds(movies),CoreMatchers.is(Arrays.asList(3,6)));
     }
+
+    
+
+    @Test
+    public void return_movies_by_length(){
+
+        Collection<Movie> movies = movieService.findMoviesByLength(119);
+
+        List<Integer> movieIds = getMovieIds(movies);
+        assertThat(movieIds,CoreMatchers.is(Arrays.asList(2,3,4,5,6)));
+    }
+
+    private List<Integer> getMovieIds(Collection<Movie> movies) {
+        List<Integer> movieIds = movies.stream().map(Movie::getId).collect(Collectors.toList());
+        return movieIds;
+    }
+
 
 }
