@@ -4,6 +4,7 @@ import com.co.gocho.movies.data.MovieRepository;
 import com.co.gocho.movies.model.Genre;
 import com.co.gocho.movies.model.Movie;
 import org.hamcrest.CoreMatchers;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -38,13 +39,13 @@ public class MovieServiceShould {
 
         movieRepository = Mockito.mock(MovieRepository.class);
         Mockito.when(movieRepository.findAll()).thenReturn(Arrays.asList(
-                new Movie(1, "Dark Knight", 152, ACTION),
-                new Movie(2, "Memento", 113, THRILLER),
-                new Movie(3, "There's Something About Mary", 119, COMEDY),
-                new Movie(4, "Super 8", 112, THRILLER),
-                new Movie(5, "Scream", 111, HORROR),
-                new Movie(6, "Home Alone", 103, COMEDY),
-                new Movie(7, "Matrix", 136, ACTION)
+                new Movie(1, "Dark Knight", 152, ACTION,"director1"),
+                new Movie(2, "Memento", 113, THRILLER,"director2"),
+                new Movie(3, "There's Something About Mary", 119, COMEDY,"director2"),
+                new Movie(4, "Super 8", 112, THRILLER,"director3"),
+                new Movie(5, "Scream", 111, HORROR,"director3"),
+                new Movie(6, "Home Alone", 103, COMEDY,"director4"),
+                new Movie(7, "Matrix", 136, ACTION,"director5")
         ));
 
         movieService = new MovieService(movieRepository);
@@ -71,6 +72,24 @@ public class MovieServiceShould {
     private List<Integer> getMovieIds(Collection<Movie> movies) {
         List<Integer> movieIds = movies.stream().map(Movie::getId).collect(Collectors.toList());
         return movieIds;
+    }
+
+    @Test
+    public void findByName() {
+
+        Collection<Movie> movies = movieService.findByName("Mat");
+        List<String> moviesName = movies.stream().map(Movie::getName).collect(Collectors.toList());
+        assertThat(moviesName,CoreMatchers.is(Arrays.asList("There's Something About Mary","Matrix")));
+
+    }
+
+    @Test
+    public void findByDirector() {
+
+        Collection<Movie> movies = movieService.findByDirector("2");
+        List<Integer> movieIds = getMovieIds(movies);
+        assertThat(movieIds,CoreMatchers.is(Arrays.asList(2,3)));
+
     }
 
 

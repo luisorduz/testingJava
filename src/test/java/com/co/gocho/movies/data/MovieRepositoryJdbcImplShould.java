@@ -31,8 +31,8 @@ public class MovieRepositoryJdbcImplShould {
 
          Collection<Movie> movies = movieRepositoryJdbc.findAll();
 
-         assertThat(movies, CoreMatchers.is(Arrays.asList(new Movie(1, "Dark Knight", 152, ACTION),
-                 new Movie(2, "Memento", 113, THRILLER),
-                 new Movie(3, "Matrix", 136, ACTION))));
+         assertThat(movies, CoreMatchers.is(Arrays.asList(new Movie(1, "Dark Knight", 152, ACTION,"director1"),
+                 new Movie(2, "Memento", 113, THRILLER,"director2"),
+                 new Movie(3, "Matrix", 136, ACTION,"director3"))));
     }
 }
