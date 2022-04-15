@@ -23,15 +23,14 @@ public class MovieRepositoryJdbcImplShould {
     public void load_all_movies() throws SQLException {
 
         DataSource dataSource = new DriverManagerDataSource("jdbc:h2:mem:test;MODE=MYSQL");
-
         ScriptUtils.executeSqlScript(dataSource.getConnection(), new ClassPathResource("sql-scripts/test-data.sql"));
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         MovieRepositoryJdbcImpl movieRepositoryJdbc = new MovieRepositoryJdbcImpl(jdbcTemplate);
 
-         Collection<Movie> movies = movieRepositoryJdbc.findAll();
+        Collection<Movie> movies = movieRepositoryJdbc.findAll();
 
-         assertThat(movies, CoreMatchers.is(Arrays.asList(new Movie(1, "Dark Knight", 152, ACTION,"director1"),
+        assertThat(movies, CoreMatchers.is(Arrays.asList(new Movie(1, "Dark Knight", 152, ACTION,"director1"),
                  new Movie(2, "Memento", 113, THRILLER,"director2"),
                  new Movie(3, "Matrix", 136, ACTION,"director3"))));
     }

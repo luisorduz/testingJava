@@ -48,6 +48,9 @@ public class MovieServiceShould {
                 new Movie(7, "Matrix", 136, ACTION,"director5")
         ));
 
+        Mockito.when(movieRepository.findById(1)).thenReturn(new Movie(1, "Dark Knight", 152, ACTION,"director1")
+        );
+
         movieService = new MovieService(movieRepository);
     }
 
@@ -90,6 +93,20 @@ public class MovieServiceShould {
         List<Integer> movieIds = getMovieIds(movies);
         assertThat(movieIds,CoreMatchers.is(Arrays.asList(2,3)));
 
+    }
+
+    @Test()
+    public void findByTemplate() {
+        Collection<Movie> movies = movieService.findMoviesByTemplate(new Movie(1,"MATRIX",112, ACTION,"director1"));
+        List<Integer> movieIds = getMovieIds(movies);
+        assertThat(movieIds,CoreMatchers.is(Arrays.asList(1)));
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void findByTemplateIlegal() {
+        Collection<Movie> movies = movieService.findMoviesByTemplate(new Movie(1,"MATRIX",-2, ACTION,"director1"));
+        List<Integer> movieIds = getMovieIds(movies);
     }
 
 
